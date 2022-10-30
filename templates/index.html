@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+    <div class="app">
+        <aside>
+            <header class="aside-header">
+                <form method="post">
+                    <input id="search-bar" type="text" placeholder="Search city" name="searched_city">
+                    <button type="submit" id="submit-button">Search</button>
+                </form>
+            <h3>{{weather.name}}</h3> 
+            </header>
+        </aside>
+
+        <main class="app-main">
+            <h3>Weekday Info</h3>
+
+            <section class="weekdays-info">
+                {% for day_data in weather.weekday_data %}
+                <article class="daily-forecast">
+                    {% if day_data.description == "Clouds" %}
+                        <img src="{{ url_for('static', filename='images/clouds.png') }}" alt="">
+                    {% elif day_data.description == "Rain" %}
+                        <img src="{{ url_for('static', filename='images/rain.png') }}" alt="">
+                    {% elif day_data.description == "Clear" %}
+                        <img src="{{ url_for('static', filename='images/clear-sky.png') }}" alt="">
+                    {% elif day_data.description == "Snow" %}
+                        <img src="{{ url_for('static', filename='images/snow.png') }}" alt="">
+                    {% elif day_data.description == "Drizzle" %}
+                        <img src="{{ url_for('static', filename='images/drizzle.png') }}" alt="">
+                    {% elif day_data.description == "Thunderstorm" %}
+                        <img src="{{ url_for('static', filename='images/thunderstorm.png') }}" alt="">
+                    {% else %}
+                        <p>{{day_data.description}}</p>
+                    {% endif %}
+                    <p>{{day_data.temperature}} °C</p>
+                </article>
+               {% endfor %}
+            </section>
+            <h3>Today's info</h3>
+            
+            <section class="todays-info">
+                <article class="info-forecast">
+                    <h3>Humidity</h3>
+                    <img src="{{ url_for('static', filename='images/humidity.png') }}" alt="humidity logo">
+                    <p>{{ weather.todays_data.humidity}} %</p>
+                </article>
+                <article class="info-forecast">
+                    <h3>Pressure</h3>
+                    <img src="{{ url_for('static', filename='images/pressure.png') }}" alt="humidity logo">
+                    <p>{{weather.todays_data.pressure}} hPa</p>
+                </article>
+                <article class="info-forecast">
+                    <h3>Sea level</h3>
+                    <img src="{{ url_for('static', filename='images/sea-level.png') }}" alt="humidity logo">
+                    <p>{{weather.todays_data.sea_level}} m</p>
+                </article>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
